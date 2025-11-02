@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Box } from '@mui/material';
+import HeroSection from './sections/HeroSection';
+import AboutSection from './sections/AboutSection';
+import ProjectsSection from './sections/ProjectsSection';
+import SkillsSection from './sections/SkillsSection';
+import ExperienceSection from './sections/ExperienceSection';
+import ContactSection from './sections/ContactSection';
+import Navbar from './components/Navbar';
+import ThemeFab from './components/ThemeFab';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ backgroundColor: 'background.default', color: 'text.primary', minHeight: '100vh' }}>
+      <Navbar />
+      <Box component="main" sx={{ pt: { xs: 8, md: 10 } }}>
+        <HeroSection />
+        <AboutSection />
+        <ProjectsSection />
+        <SkillsSection />
+        <ExperienceSection />
+        <ContactSection />
+      </Box>
+      <ThemeFab />
+    </Box>
   );
-}
+};
 
 export default App;

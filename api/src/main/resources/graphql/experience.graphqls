@@ -1,0 +1,16 @@
+type Experience {
+    id: ID!
+    roleTitle: String!
+    companyName: String!
+    location: String!
+    startDate: String!
+    endDate: String
+    descriptionMd: String
+    orderIndex: Int!
+    createdAt: String!
+}
+
+type Query {
+    experiences: [Experience!]!
+    experienceById(id: ID!): Experience
+}
