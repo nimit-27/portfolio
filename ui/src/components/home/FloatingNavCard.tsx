@@ -23,7 +23,7 @@ type FloatingNavCardProps = {
 
 export function FloatingNavCard({ card }: FloatingNavCardProps) {
   return (
-    <a className="floating-nav-card" href={card.route} style={card.position}>
+    <a className="floating-nav-card" href={card.route}>
       {card.icon && <span className="floating-nav-card__icon" aria-hidden="true">{card.icon}</span>}
       <span className="floating-nav-card__content">
         <strong>{card.title}</strong>
