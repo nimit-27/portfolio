@@ -7,6 +7,8 @@ type FloatingNavClusterProps = {
 };
 
 const MAX_ORBIT_ROTATION = 360;
+const PORTRAIT_Z_INDEX = 100;
+const ORBIT_Z_INDEX_DEPTH = 70;
 const DRAG_ROTATION_MULTIPLIER = 1.4;
 
 function normalizeOrbitRotation(rotation: number) {
@@ -24,9 +26,9 @@ function getVerticalSliderRotation(event: React.PointerEvent<HTMLInputElement>) 
 function getOrbitDepthLayer(angle: number) {
   const normalizedAngle = normalizeOrbitRotation(angle);
   const angleInRadians = (normalizedAngle * Math.PI) / 180;
-  const depthProgress = (Math.sin(angleInRadians) + 1) / 2;
+  const verticalOrbitPosition = Math.sin(angleInRadians);
 
-  return Math.round(depthProgress * 200);
+  return Math.round(PORTRAIT_Z_INDEX + verticalOrbitPosition * ORBIT_Z_INDEX_DEPTH);
 }
 
 export function FloatingNavCluster({ cards, className = '' }: FloatingNavClusterProps) {
