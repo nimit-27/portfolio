@@ -23,11 +23,14 @@ function getVerticalSliderRotation(event: React.PointerEvent<HTMLInputElement>) 
   return clampedProgress * MAX_ORBIT_ROTATION;
 }
 
-function getOrbitDepthLayer(angle: number) {
+function getVerticalOrbitPosition(angle: number) {
   const normalizedAngle = normalizeOrbitRotation(angle);
   const angleInRadians = (normalizedAngle * Math.PI) / 180;
-  const verticalOrbitPosition = Math.sin(angleInRadians);
 
+  return Math.sin(angleInRadians);
+}
+
+function getOrbitDepthLayer(verticalOrbitPosition: number) {
   return Math.round(PORTRAIT_Z_INDEX + verticalOrbitPosition * ORBIT_Z_INDEX_DEPTH);
 }
 
@@ -76,32 +79,46 @@ export function FloatingNavCluster({ cards, className = '' }: FloatingNavCluster
     }
   };
 
+  const renderOrbitLayer = (isFrontLayer: boolean) => (
+    <div
+      className={`floating-nav-cluster__orbit floating-nav-cluster__orbit--${isFrontLayer ? 'front' : 'back'}`}
+    >
+      {cards.map((card, index) => {
+        const orbitAngleValue = (index / totalCards) * 360 + orbitRotation;
+        const verticalOrbitPosition = getVerticalOrbitPosition(orbitAngleValue);
+        const isCardInFront = verticalOrbitPosition >= 0;
+
+        if (isCardInFront !== isFrontLayer) {
+          return null;
+        }
+
+        const orbitAngle = `${orbitAngleValue}deg`;
+        const inverseOrbitAngle = `${orbitAngleValue * -1}deg`;
+        const orbitDepthLayer = getOrbitDepthLayer(verticalOrbitPosition);
+
+        return (
+          <div
+            key={card.id}
+            className="floating-nav-cluster__orbit-item"
+            style={
+              {
+                '--orbit-angle': orbitAngle,
+                '--orbit-angle-inverse': inverseOrbitAngle,
+                zIndex: orbitDepthLayer,
+              } as React.CSSProperties
+            }
+          >
+            <FloatingNavCard card={card} />
+          </div>
+        );
+      })}
+    </div>
+  );
+
   return (
     <nav className={`floating-nav-cluster ${className}`.trim()} aria-label="Creative portfolio sections">
-      <div className="floating-nav-cluster__orbit">
-        {cards.map((card, index) => {
-          const orbitAngleValue = (index / totalCards) * 360 + orbitRotation;
-          const orbitAngle = `${orbitAngleValue}deg`;
-          const inverseOrbitAngle = `${orbitAngleValue * -1}deg`;
-          const orbitDepthLayer = getOrbitDepthLayer(orbitAngleValue);
-
-          return (
-            <div
-              key={card.id}
-              className="floating-nav-cluster__orbit-item"
-              style={
-                {
-                  '--orbit-angle': orbitAngle,
-                  '--orbit-angle-inverse': inverseOrbitAngle,
-                  zIndex: orbitDepthLayer,
-                } as React.CSSProperties
-              }
-            >
-              <FloatingNavCard card={card} />
-            </div>
-          );
-        })}
-      </div>
+      {renderOrbitLayer(false)}
+      {renderOrbitLayer(true)}
       <div className="floating-nav-cluster__controls" aria-label="Orbit controls">
         <label className="floating-nav-cluster__slider floating-nav-cluster__slider--position">
           <span>Orbit</span>
