@@ -9,7 +9,6 @@ type FloatingNavClusterProps = {
 const MAX_ORBIT_ROTATION = 360;
 const PORTRAIT_Z_INDEX = 100;
 const ORBIT_Z_INDEX_DEPTH = 70;
-const DRAG_ROTATION_MULTIPLIER = 1.4;
 
 function normalizeOrbitRotation(rotation: number) {
   return ((rotation % MAX_ORBIT_ROTATION) + MAX_ORBIT_ROTATION) % MAX_ORBIT_ROTATION;
@@ -37,15 +36,23 @@ function getOrbitDepthLayer(verticalOrbitPosition: number) {
   return Math.round(PORTRAIT_Z_INDEX + verticalOrbitPosition * ORBIT_Z_INDEX_DEPTH);
 }
 
+function getCenteredCardIndex(cards: FloatingNavCardData[], orbitRotation: number) {
+  if (cards.length === 0) {
+    return -1;
+  }
+
+  return cards.reduce((centeredIndex, _card, index) => {
+    const currentAngle = (index / cards.length) * MAX_ORBIT_ROTATION + orbitRotation;
+    const centeredAngle = (centeredIndex / cards.length) * MAX_ORBIT_ROTATION + orbitRotation;
+
+    return getVerticalOrbitPosition(currentAngle) > getVerticalOrbitPosition(centeredAngle) ? index : centeredIndex;
+  }, 0);
+}
+
 export function FloatingNavCluster({ cards, className = '' }: FloatingNavClusterProps) {
   const [orbitRotation, setOrbitRotation] = useState(0);
   const hoverSliderClientYRef = useRef<number | null>(null);
-  const dragStartRef = useRef<{ pointerId: number; clientY: number; rotation: number } | null>(null);
   const totalCards = Math.max(cards.length, 1);
-
-  const updateOrbitRotation = (rotation: number) => {
-    setOrbitRotation(normalizeOrbitRotation(rotation));
-  };
 
   const handleHoverSliderPointerEnter = (event: React.PointerEvent<HTMLDivElement>) => {
     hoverSliderClientYRef.current = event.clientY;
@@ -69,45 +76,23 @@ export function FloatingNavCluster({ cards, className = '' }: FloatingNavCluster
     hoverSliderClientYRef.current = null;
   };
 
+  const openCenteredCard = () => {
+    const centeredCardIndex = getCenteredCardIndex(cards, orbitRotation);
+    const centeredCard = cards[centeredCardIndex];
+
+    if (centeredCard) {
+      window.location.href = centeredCard.route;
+    }
+  };
+
   const handleHoverSliderKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'ArrowDown') {
+    if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      updateOrbitRotation(orbitRotation + MAX_ORBIT_ROTATION / 20);
-    }
-
-    if (event.key === 'ArrowUp') {
-      event.preventDefault();
-      updateOrbitRotation(orbitRotation - MAX_ORBIT_ROTATION / 20);
+      openCenteredCard();
     }
   };
 
-  const handleDragSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateOrbitRotation(Number(event.currentTarget.value));
-  };
-
-  const handleDragSliderPointerDown = (event: React.PointerEvent<HTMLInputElement>) => {
-    dragStartRef.current = {
-      pointerId: event.pointerId,
-      clientY: event.clientY,
-      rotation: orbitRotation,
-    };
-    event.currentTarget.setPointerCapture(event.pointerId);
-  };
-
-  const handleDragSliderPointerMove = (event: React.PointerEvent<HTMLInputElement>) => {
-    if (!dragStartRef.current || dragStartRef.current.pointerId !== event.pointerId) {
-      return;
-    }
-
-    const distanceMoved = dragStartRef.current.clientY - event.clientY;
-    updateOrbitRotation(dragStartRef.current.rotation + distanceMoved * DRAG_ROTATION_MULTIPLIER);
-  };
-
-  const handleDragSliderPointerEnd = (event: React.PointerEvent<HTMLInputElement>) => {
-    if (dragStartRef.current?.pointerId === event.pointerId) {
-      dragStartRef.current = null;
-    }
-  };
+  const centeredCardIndex = getCenteredCardIndex(cards, orbitRotation);
 
   const renderOrbitLayer = (isFrontLayer: boolean) => (
     <div
@@ -125,11 +110,12 @@ export function FloatingNavCluster({ cards, className = '' }: FloatingNavCluster
         const orbitAngle = `${orbitAngleValue}deg`;
         const inverseOrbitAngle = `${orbitAngleValue * -1}deg`;
         const orbitDepthLayer = getOrbitDepthLayer(verticalOrbitPosition);
+        const isCenteredCard = index === centeredCardIndex;
 
         return (
           <div
             key={card.id}
-            className="floating-nav-cluster__orbit-item"
+            className={`floating-nav-cluster__orbit-item${isCenteredCard ? ' floating-nav-cluster__orbit-item--centered' : ''}`}
             style={
               {
                 '--orbit-angle': orbitAngle,
@@ -138,7 +124,7 @@ export function FloatingNavCluster({ cards, className = '' }: FloatingNavCluster
               } as React.CSSProperties
             }
           >
-            <FloatingNavCard card={card} />
+            <FloatingNavCard card={card} isClickable={isCenteredCard} />
           </div>
         );
       })}
@@ -152,39 +138,15 @@ export function FloatingNavCluster({ cards, className = '' }: FloatingNavCluster
       <div className="floating-nav-cluster__controls" aria-label="Orbit controls">
         <div
           className="floating-nav-cluster__slider floating-nav-cluster__slider--position"
-          role="slider"
-          aria-label="Hover vertically to rotate floating navigation cards"
-          aria-orientation="vertical"
-          aria-valuemin={0}
-          aria-valuemax={MAX_ORBIT_ROTATION}
-          aria-valuenow={Math.round(orbitRotation)}
+          role="button"
+          aria-label="Open the centered floating navigation card"
           tabIndex={0}
+          onClick={openCenteredCard}
           onKeyDown={handleHoverSliderKeyDown}
           onPointerEnter={handleHoverSliderPointerEnter}
           onPointerMove={handleHoverSliderPointerMove}
           onPointerLeave={handleHoverSliderPointerLeave}
-        >
-          <span>Orbit</span>
-          <div className="floating-nav-cluster__slider-pad" aria-hidden="true">
-            <span className="floating-nav-cluster__slider-pad-track" />
-          </div>
-        </div>
-        <label className="floating-nav-cluster__slider floating-nav-cluster__slider--distance">
-          <span>Push</span>
-          <input
-            type="range"
-            min="0"
-            max={MAX_ORBIT_ROTATION}
-            value={orbitRotation}
-            aria-label="Drag vertically to spin floating navigation cards by pointer distance"
-            onChange={handleDragSliderChange}
-            onPointerDown={handleDragSliderPointerDown}
-            onPointerMove={handleDragSliderPointerMove}
-            onPointerUp={handleDragSliderPointerEnd}
-            onPointerCancel={handleDragSliderPointerEnd}
-            onLostPointerCapture={handleDragSliderPointerEnd}
-          />
-        </label>
+        />
       </div>
     </nav>
   );

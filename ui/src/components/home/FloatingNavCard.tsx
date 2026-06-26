@@ -19,11 +19,24 @@ export type FloatingNavCardData = {
 
 type FloatingNavCardProps = {
   card: FloatingNavCardData;
+  isClickable?: boolean;
 };
 
-export function FloatingNavCard({ card }: FloatingNavCardProps) {
+export function FloatingNavCard({ card, isClickable = true }: FloatingNavCardProps) {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isClickable) {
+      event.preventDefault();
+    }
+  };
+
   return (
-    <a className="floating-nav-card" href={card.route}>
+    <a
+      className={`floating-nav-card${isClickable ? '' : ' floating-nav-card--disabled'}`}
+      href={card.route}
+      aria-disabled={!isClickable}
+      tabIndex={isClickable ? undefined : -1}
+      onClick={handleClick}
+    >
       {card.icon && <span className="floating-nav-card__icon" aria-hidden="true">{card.icon}</span>}
       <span className="floating-nav-card__content">
         <strong>{card.title}</strong>
