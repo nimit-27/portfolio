@@ -38,7 +38,7 @@ a { color: inherit; }
 
 .background-name { position: absolute; inset: 9% 3% auto; text-align: center; z-index: -1; opacity: 0.55; }
 .background-name__eyebrow { display: block; color: var(--accent); font-size: clamp(0.8rem, 2vw, 1rem); letter-spacing: 0.5em; text-transform: uppercase; }
-.background-name__text { display: block; font-size: clamp(4.5rem, 18vw, 15rem); font-weight: 950; line-height: 0.82; letter-spacing: -0.12em; text-transform: uppercase; text-shadow: 0 0 42px rgba(255, 204, 112, 0.22); }
+.background-name__text { display: block; font-size: clamp(4.5rem, 18vw, 15rem); font-weight: 950; line-height: 0.82; letter-spacing: -0.10em; text-transform: lowercase; text-shadow: 0 0 42px rgba(255, 204, 112, 0.22); }
 
 .home-hero__portrait-shell { position: relative; width: min(48vw, 420px); aspect-ratio: 0.78; display: grid; place-items: center; }
 .home-hero__glow { position: absolute; width: 86%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 120deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent)); filter: blur(38px); opacity: 0.65; animation: slow-spin 18s linear infinite; }

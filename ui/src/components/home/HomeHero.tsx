@@ -6,12 +6,12 @@ import { ImageRotator, RotatorImage } from './ImageRotator';
 
 const heroImages: RotatorImage[] = [
   {
-    src: '/logo512.png',
+    src: '/self/nimz_black_kurta.png',
     alt: 'Portrait placeholder one',
     waitTime: 2600,
   },
   {
-    src: '/logo192.png',
+    src: '/self/nimz_laughing_left_profile.png',
     alt: 'Portrait placeholder two',
     waitTime: 2200,
     fallbackSrc: '/logo512.png',
@@ -22,7 +22,7 @@ export function HomeHero() {
   return (
     <main className="home-hero">
       <section className="home-hero__stage" aria-labelledby="home-hero-title">
-        <BackgroundName name="Your Name" eyebrow="Creative Portfolio" />
+        <BackgroundName name="Nimit Jain" />
         <div className="home-hero__portrait-shell">
           <div className="home-hero__glow" />
           <ImageRotator images={heroImages} className="home-hero__rotator" imageClassName="home-hero__image" />
