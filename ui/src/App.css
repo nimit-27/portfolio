@@ -555,67 +555,38 @@ a {
 }
 
 .honeycomb-home {
+  position: relative;
   min-height: 100vh;
   overflow: hidden;
-  padding: clamp(1rem, 3vw, 2.5rem);
+  isolation: isolate;
+  background: radial-gradient(circle at 46% 42%, rgba(255, 204, 112, 0.18), transparent 22%),
+    radial-gradient(circle at 20% 18%, rgba(200, 80, 192, 0.2), transparent 28%),
+    linear-gradient(135deg, #100d1b 0%, #1e1833 48%, #07070d 100%);
 }
 
-.honeycomb-home__stage {
-  position: relative;
-  min-height: calc(100vh - clamp(2rem, 6vw, 5rem));
-  border: 1px solid var(--line);
-  border-radius: clamp(1.5rem, 4vw, 3rem);
-  display: grid;
-  place-items: center;
-  padding: clamp(1.5rem, 4vw, 4rem);
-  overflow: hidden;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 204, 112, 0.18), transparent 28%), linear-gradient(150deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
+.honeycomb-home .background-name {
+  inset: 50% 2rem auto;
+  z-index: 0;
+  opacity: 0.9;
+  transform: translateY(-50%);
 }
 
-.honeycomb-home__intro {
-  position: absolute;
-  left: clamp(1.5rem, 4vw, 4rem);
-  top: clamp(1.5rem, 4vw, 4rem);
-  z-index: 2;
-  max-width: min(34rem, 42vw);
-  pointer-events: none;
-}
-
-.honeycomb-home__intro p {
-  margin: 0 0 0.8rem;
-  color: var(--accent);
-  font-weight: 900;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.honeycomb-home__intro h1 {
-  margin: 0;
-  font-size: clamp(2.3rem, 5vw, 5.2rem);
-  line-height: 0.86;
-  letter-spacing: -0.09em;
-}
-
-.honeycomb-home__intro span {
-  display: block;
-  margin-top: 1.25rem;
-  max-width: 28rem;
-  color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.6;
+.honeycomb-home .background-name__text {
+  color: rgba(255, 239, 204, 0.92);
+  font-size: clamp(5rem, 16vw, 18rem);
+  letter-spacing: -0.12em;
+  text-shadow: 0 0 30px rgba(255, 204, 112, 0.3), 0 20px 70px rgba(0, 0, 0, 0.42);
 }
 
 .honeycomb-grid {
-  --hex-active-scale: 1.07;
-  --hex-neighbor-scale: 0.99;
-  --hex-nearby-scale: 1.0;
+  --hex-active-scale: 1.02;
+  --hex-neighbor-scale: 1;
+  --hex-nearby-scale: 1;
   --hex-transition-speed: 280ms;
-  width: min(1120px, 94vw);
-  height: min(780px, 82vh);
-  min-height: 620px;
-  margin: auto;
-  filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.32));
+  position: absolute;
+  inset: -6vh -6vw;
+  z-index: 1;
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.34));
   perspective: 900px;
 }
 
@@ -623,7 +594,7 @@ a {
   display: block;
   width: 100%;
   height: 100%;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .honeycomb-grid__cell {
@@ -639,10 +610,10 @@ a {
 }
 
 .honeycomb-grid__cell .hexagon polygon {
-  stroke: rgba(255, 255, 255, 0.2);
-  stroke-width: 0.36;
-  fill: rgba(28, 22, 48, 0.9);
-  transition: fill 280ms ease, stroke 280ms ease, stroke-width 280ms ease;
+  stroke: rgba(255, 255, 255, 0.24);
+  stroke-width: 0.18;
+  fill: rgba(28, 22, 48, 0.94);
+  transition: fill 280ms ease, fill-opacity 280ms ease, stroke 280ms ease, stroke-width 280ms ease;
 }
 
 .honeycomb-grid__cell--nav {
@@ -650,7 +621,7 @@ a {
 }
 
 .honeycomb-grid__cell--decor {
-  opacity: 0.76;
+  opacity: 0.9;
 }
 
 .honeycomb-grid__cell--gold {
@@ -683,28 +654,39 @@ a {
   --honeycomb-active-fill: #8c3c2b;
 }
 
+.honeycomb-grid__cell:not(.honeycomb-grid__cell--transparent) .hexagon polygon {
+  fill: var(--honeycomb-fill);
+}
+
+.honeycomb-grid__cell--transparent .hexagon polygon {
+  fill: transparent;
+  fill-opacity: 0;
+  stroke: rgba(255, 231, 180, 0.56);
+  stroke-width: 0.24;
+}
+
 .honeycomb-grid__cell.is-active {
   opacity: 1;
 }
 
 .honeycomb-grid__cell.is-active .hexagon {
-  transform: translateZ(34px) scale(var(--hex-active-scale));
-  filter: brightness(1.28) saturate(1.2) var(--honeycomb-glow);
+  transform: translateZ(12px) scale(var(--hex-active-scale));
+  filter: brightness(1.18) saturate(1.16) var(--honeycomb-glow);
 }
 
-.honeycomb-grid__cell.is-active .hexagon polygon {
+.honeycomb-grid__cell.is-active:not(.honeycomb-grid__cell--transparent) .hexagon polygon {
   fill: var(--honeycomb-active-fill, #2d2448);
   fill-opacity: 1;
   stroke: rgba(255, 255, 255, 0.68);
-  stroke-width: 0.48;
+  stroke-width: 0.28;
 }
 
 .honeycomb-grid__cell.is-neighbor .hexagon {
   transform: scale(var(--hex-neighbor-scale));
-  filter: brightness(1.12);
+  filter: brightness(1.08);
 }
 
-.honeycomb-grid__cell.is-neighbor .hexagon polygon {
+.honeycomb-grid__cell.is-neighbor:not(.honeycomb-grid__cell--transparent) .hexagon polygon {
   fill: rgba(255, 255, 255, 0.13);
   stroke: rgba(255, 255, 255, 0.38);
 }
@@ -734,6 +716,10 @@ a {
   text-align: center;
 }
 
+.honeycomb-grid__cell--transparent .honeycomb-grid__content {
+  display: none;
+}
+
 .honeycomb-grid__self-image {
   position: absolute;
   inset: -8% -2% 0;
@@ -745,7 +731,6 @@ a {
   z-index: 0;
 }
 
-.honeycomb-grid__content--image .honeycomb-grid__coordinate,
 .honeycomb-grid__content--image .honeycomb-grid__icon {
   display: none;
 }
@@ -757,15 +742,6 @@ a {
   z-index: 1;
   background: linear-gradient(180deg, transparent 45%, rgba(17, 15, 29, 0.42));
   pointer-events: none;
-}
-
-.honeycomb-grid__coordinate {
-  position: absolute;
-  top: 0.05rem;
-  right: 0.25rem;
-  color: rgba(255, 255, 255, 0.34);
-  font-size: 0.1rem;
-  font-weight: 900;
 }
 
 .honeycomb-grid__icon {
@@ -788,22 +764,12 @@ a {
 }
 
 @media (max-width: 920px) {
-  .honeycomb-home__stage {
-    overflow-x: auto;
-    place-items: center start;
-    padding-top: 9rem;
-  }
-
-  .honeycomb-home__intro {
-    max-width: calc(100% - 3rem);
+  .honeycomb-home .background-name__text {
+    font-size: clamp(4.4rem, 21vw, 10rem);
   }
 
   .honeycomb-grid {
-    width: 960px;
-    max-width: none;
-    height: 660px;
-    transform: scale(0.78);
-    transform-origin: center left;
+    inset: -7vh -28vw;
   }
 
   .homepage-design-toggle {
