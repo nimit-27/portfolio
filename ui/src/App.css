@@ -152,9 +152,6 @@ a { color: inherit; }
   --hex-active-scale: 1.14;
   --hex-neighbor-scale: 1.055;
   --hex-nearby-scale: 1.025;
-  --hex-neighbor-tilt-y: 33deg;
-  --hex-neighbor-tilt-x: 24deg;
-  --hex-neighbor-diagonal-tilt-y: 18deg;
   --hex-transition-speed: 280ms;
   width: min(760px, 100%);
   height: min(620px, 72vh);
@@ -174,21 +171,16 @@ a { color: inherit; }
 }
 .honeycomb-grid__cell--nav { cursor: pointer; }
 .honeycomb-grid__cell--decor { opacity: 0.76; }
-.honeycomb-grid__cell--gold { --honeycomb-glow: drop-shadow(0 0 12px rgba(255, 204, 112, 0.62)); --honeycomb-fill: rgba(255, 204, 112, 0.34); }
-.honeycomb-grid__cell--violet { --honeycomb-glow: drop-shadow(0 0 12px rgba(200, 80, 192, 0.62)); --honeycomb-fill: rgba(200, 80, 192, 0.32); }
-.honeycomb-grid__cell--blue { --honeycomb-glow: drop-shadow(0 0 12px rgba(65, 88, 208, 0.68)); --honeycomb-fill: rgba(65, 88, 208, 0.34); }
-.honeycomb-grid__cell--mint { --honeycomb-glow: drop-shadow(0 0 12px rgba(98, 255, 205, 0.52)); --honeycomb-fill: rgba(98, 255, 205, 0.25); }
-.honeycomb-grid__cell--ember { --honeycomb-glow: drop-shadow(0 0 12px rgba(255, 117, 82, 0.6)); --honeycomb-fill: rgba(255, 117, 82, 0.32); }
+.honeycomb-grid__cell--gold { --honeycomb-glow: drop-shadow(0 0 12px rgba(255, 204, 112, 0.62)); --honeycomb-fill: rgba(255, 204, 112, 0.34); --honeycomb-active-fill: #8f6a26; }
+.honeycomb-grid__cell--violet { --honeycomb-glow: drop-shadow(0 0 12px rgba(200, 80, 192, 0.62)); --honeycomb-fill: rgba(200, 80, 192, 0.32); --honeycomb-active-fill: #71316d; }
+.honeycomb-grid__cell--blue { --honeycomb-glow: drop-shadow(0 0 12px rgba(65, 88, 208, 0.68)); --honeycomb-fill: rgba(65, 88, 208, 0.34); --honeycomb-active-fill: #27377f; }
+.honeycomb-grid__cell--mint { --honeycomb-glow: drop-shadow(0 0 12px rgba(98, 255, 205, 0.52)); --honeycomb-fill: rgba(98, 255, 205, 0.25); --honeycomb-active-fill: #28715e; }
+.honeycomb-grid__cell--ember { --honeycomb-glow: drop-shadow(0 0 12px rgba(255, 117, 82, 0.6)); --honeycomb-fill: rgba(255, 117, 82, 0.32); --honeycomb-active-fill: #8c3c2b; }
+.honeycomb-grid__cell.is-active { opacity: 1; }
 .honeycomb-grid__cell.is-active .hexagon { transform: translateZ(34px) scale(var(--hex-active-scale)); filter: brightness(1.28) saturate(1.2) var(--honeycomb-glow); }
-.honeycomb-grid__cell.is-active .hexagon polygon { fill: var(--honeycomb-fill); stroke: rgba(255, 255, 255, 0.68); stroke-width: 0.55; }
+.honeycomb-grid__cell.is-active .hexagon polygon { fill: var(--honeycomb-active-fill, #2d2448); fill-opacity: 1; stroke: rgba(255, 255, 255, 0.68); stroke-width: 0.55; }
 
-.honeycomb-grid__cell.is-neighbor .hexagon { filter: brightness(1.12); }
-.honeycomb-grid__cell.is-neighbor.direction-right .hexagon { transform: scale(var(--hex-neighbor-scale)) rotateY(calc(-1 * var(--hex-neighbor-tilt-y))); }
-.honeycomb-grid__cell.is-neighbor.direction-left .hexagon { transform: scale(var(--hex-neighbor-scale)) rotateY(var(--hex-neighbor-tilt-y)); }
-.honeycomb-grid__cell.is-neighbor.direction-top-right .hexagon { transform: scale(var(--hex-neighbor-scale)) rotateX(var(--hex-neighbor-tilt-x)) rotateY(calc(-1 * var(--hex-neighbor-diagonal-tilt-y))); }
-.honeycomb-grid__cell.is-neighbor.direction-bottom-right .hexagon { transform: scale(var(--hex-neighbor-scale)) rotateX(calc(-1 * var(--hex-neighbor-tilt-x))) rotateY(calc(-1 * var(--hex-neighbor-diagonal-tilt-y))); }
-.honeycomb-grid__cell.is-neighbor.direction-top-left .hexagon { transform: scale(var(--hex-neighbor-scale)) rotateX(var(--hex-neighbor-tilt-x)) rotateY(var(--hex-neighbor-diagonal-tilt-y)); }
-.honeycomb-grid__cell.is-neighbor.direction-bottom-left .hexagon { transform: scale(var(--hex-neighbor-scale)) rotateX(calc(-1 * var(--hex-neighbor-tilt-x))) rotateY(var(--hex-neighbor-diagonal-tilt-y)); }
+.honeycomb-grid__cell.is-neighbor .hexagon { transform: scale(var(--hex-neighbor-scale)); filter: brightness(1.12); }
 .honeycomb-grid__cell.is-neighbor .hexagon polygon { fill: rgba(255, 255, 255, 0.13); stroke: rgba(255, 255, 255, 0.38); }
 .honeycomb-grid__cell.is-nearby .hexagon { transform: scale(var(--hex-nearby-scale)); filter: brightness(1.05); }
 .honeycomb-grid__content-shell { overflow: visible; pointer-events: none; }
