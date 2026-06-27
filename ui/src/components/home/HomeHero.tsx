@@ -28,10 +28,10 @@ export function HomeHero() {
           <ImageRotator images={heroImages} className="home-hero__rotator" imageClassName="home-hero__image" />
         </div>
         <FloatingNavCluster cards={homeNavCards} />
-        <div className="home-hero__copy">
+        {/* <div className="home-hero__copy">
           <h1 id="home-hero-title">Creative developer, visual thinker, and maker of curious web spaces.</h1>
           <p>Explore the orbit: a timeline of growth, selected projects, experiments, artworks, and ways to connect.</p>
-        </div>
+        </div> */}
       </section>
     </main>
   );
