@@ -12,6 +12,7 @@ export type HoneycombCell = {
   imageSrc?: string;
   imageAlt?: string;
   tone?: 'gold' | 'violet' | 'blue' | 'mint' | 'ember';
+  transparent?: boolean;
 };
 
 type HoneycombGridProps = {
@@ -104,7 +105,7 @@ export function HoneycombGrid({ cells, className = '' }: HoneycombGridProps) {
 
             return (
               <Hexagon
-                className={`honeycomb-grid__cell honeycomb-grid__cell--${isNavigationCell ? 'nav' : 'decor'} honeycomb-grid__cell--${cell.tone ?? 'violet'} is-${reaction} direction-${direction}`}
+                className={`honeycomb-grid__cell honeycomb-grid__cell--${isNavigationCell ? 'nav' : 'decor'} honeycomb-grid__cell--${cell.tone ?? 'violet'}${cell.transparent ? ' honeycomb-grid__cell--transparent' : ''} is-${reaction} direction-${direction}`}
                 q={cell.q}
                 r={cell.r}
                 s={cell.s}
@@ -128,12 +129,9 @@ export function HoneycombGrid({ cells, className = '' }: HoneycombGridProps) {
                     {cell.imageSrc && (
                       <img className="honeycomb-grid__self-image" src={cell.imageSrc} alt={cell.imageAlt ?? ''} />
                     )}
-                    <span className="honeycomb-grid__coordinate" aria-hidden="true">
-                      {cell.row}.{cell.column}
-                    </span>
-                    {cell.icon && <span className="honeycomb-grid__icon" aria-hidden="true">{cell.icon}</span>}
-                    {cell.title && <strong>{cell.title}</strong>}
-                    {cell.subtitle && <small>{cell.subtitle}</small>}
+                    {!cell.transparent && cell.icon && <span className="honeycomb-grid__icon" aria-hidden="true">{cell.icon}</span>}
+                    {!cell.transparent && cell.title && <strong>{cell.title}</strong>}
+                    {!cell.transparent && cell.subtitle && <small>{cell.subtitle}</small>}
                   </div>
                 </foreignObject>
               </Hexagon>
