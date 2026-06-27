@@ -22,6 +22,7 @@ export function HomeHero() {
   return (
     <main className="home-hero">
       <section className="home-hero__stage" aria-labelledby="home-hero-title">
+        <h1 id="home-hero-title" className="sr-only">Creative developer, visual thinker, and maker of curious web spaces.</h1>
         <BackgroundName name="Nimit Jain" />
         <div className="home-hero__portrait-shell">
           <div className="home-hero__glow" />
