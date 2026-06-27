@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { HoneycombCell, HoneycombGrid } from './HoneycombGrid';
+import { HexagonExpandTransition, HoneycombTransitionMode, HoneycombVanishTransition } from './HoneycombTransitions';
 
 const honeycombCells: HoneycombCell[] = [
   // Row 0
@@ -40,15 +41,57 @@ const honeycombCells: HoneycombCell[] = [
 ];
 
 export function HoneycombHome() {
+  const transitionModes = useMemo<{ id: HoneycombTransitionMode; label: string }[]>(() => [
+    { id: 'expand', label: 'Zoom hex' },
+    { id: 'vanish', label: 'Vanish cells' },
+  ], []);
+  const [transitionModeIndex, setTransitionModeIndex] = useState(0);
+  const [selectedCell, setSelectedCell] = useState<HoneycombCell | null>(null);
+  const activeTransitionMode = transitionModes[transitionModeIndex];
+
+  const toggleTransitionMode = () => {
+    setSelectedCell(null);
+    setTransitionModeIndex((currentIndex) => (currentIndex + 1) % transitionModes.length);
+  };
+
+  const handleNavigate = (cell: HoneycombCell) => {
+    setSelectedCell(cell);
+    if (cell.route) {
+      window.history.pushState({ honeycombRoute: cell.route }, '', cell.route);
+    }
+  };
+
+  useEffect(() => {
+    if (!selectedCell) {
+      return undefined;
+    }
+
+    const resetTimer = window.setTimeout(() => {
+      setSelectedCell(null);
+      window.history.pushState({ honeycombRoute: '/' }, '', '/');
+    }, 2400);
+
+    return () => window.clearTimeout(resetTimer);
+  }, [selectedCell]);
+
   return (
     <main className="honeycomb-home">
       <section className="honeycomb-home__stage" aria-labelledby="honeycomb-home-title">
+        <button className="honeycomb-transition-toggle" type="button" onClick={toggleTransitionMode}>
+          <span>Transition</span>
+          <strong>{activeTransitionMode.label}</strong>
+        </button>
         <div className="honeycomb-home__intro">
           <p>Alternate homepage 02</p>
           <h1 id="honeycomb-home-title">Choose a path through the hive.</h1>
           <span>Hover the hexagons to ripple energy through neighboring cells.</span>
         </div>
-        <HoneycombGrid cells={honeycombCells} />
+        <HoneycombGrid cells={honeycombCells} selectedCellId={selectedCell?.id ?? null} transitionMode={activeTransitionMode.id} onNavigate={handleNavigate} />
+        {activeTransitionMode.id === 'expand' ? (
+          <HexagonExpandTransition activeCell={selectedCell} />
+        ) : (
+          <HoneycombVanishTransition activeCell={selectedCell} />
+        )}
       </section>
     </main>
   );
