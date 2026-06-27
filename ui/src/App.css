@@ -149,23 +149,18 @@ a { color: inherit; }
 .honeycomb-home__intro span { display: block; margin-top: 1.25rem; max-width: 32rem; color: var(--muted); font-size: 1.08rem; line-height: 1.6; }
 
 .honeycomb-grid {
-  --hex-width: clamp(6.6rem, 10vw, 9.5rem);
-  --hex-height: calc(var(--hex-width) * 0.88);
-  display: grid;
-  grid-template-columns: repeat(8, calc(var(--hex-width) / 2));
-  grid-auto-rows: calc(var(--hex-height) * 0.76);
-  justify-content: center;
-  align-content: center;
-  padding: 4rem 1rem;
+  position: relative;
+  flex: 0 0 auto;
+  margin: 4rem auto;
   filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.32));
 }
-.honeycomb-grid__slot { width: var(--hex-width); height: var(--hex-height); }
+.honeycomb-grid__slot { position: absolute; top: 0; left: 0; width: var(--hex-width); height: var(--hex-height); transform-origin: center; }
 .honeycomb-grid__cell {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
-  clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -196,6 +191,7 @@ a { color: inherit; }
 
 @media (max-width: 920px) {
   .honeycomb-home__stage { grid-template-columns: 1fr; padding-top: 5rem; }
-  .honeycomb-grid { --hex-width: clamp(5.4rem, 18vw, 7.2rem); overflow-x: auto; justify-content: start; }
+  .honeycomb-home__stage { overflow-x: auto; }
+  .honeycomb-grid { margin-inline: 0; transform: scale(0.86); transform-origin: top left; }
   .homepage-design-toggle { min-width: 7.6rem; }
 }
