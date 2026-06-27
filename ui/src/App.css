@@ -156,7 +156,8 @@ a { color: inherit; }
   filter: drop-shadow(0 26px 34px rgba(0, 0, 0, 0.32));
 }
 .honeycomb-grid__svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.honeycomb-grid__cell { cursor: default; outline: none; transform-box: fill-box; transform-origin: center; transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), filter 280ms ease; }
+.honeycomb-grid__cell { cursor: default; outline: none; }
+.honeycomb-grid__cell .hexagon { transform-box: fill-box; transform-origin: center; transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), filter 280ms ease; }
 .honeycomb-grid__cell .hexagon polygon {
   stroke: rgba(255, 255, 255, 0.2);
   stroke-width: 0.42;
@@ -170,11 +171,11 @@ a { color: inherit; }
 .honeycomb-grid__cell--blue { --honeycomb-glow: drop-shadow(0 0 12px rgba(65, 88, 208, 0.68)); --honeycomb-fill: rgba(65, 88, 208, 0.34); }
 .honeycomb-grid__cell--mint { --honeycomb-glow: drop-shadow(0 0 12px rgba(98, 255, 205, 0.52)); --honeycomb-fill: rgba(98, 255, 205, 0.25); }
 .honeycomb-grid__cell--ember { --honeycomb-glow: drop-shadow(0 0 12px rgba(255, 117, 82, 0.6)); --honeycomb-fill: rgba(255, 117, 82, 0.32); }
-.honeycomb-grid__cell.is-active { transform: scale(1.18); filter: brightness(1.28) saturate(1.2) var(--honeycomb-glow); }
+.honeycomb-grid__cell.is-active .hexagon { transform: scale(1.14); filter: brightness(1.28) saturate(1.2) var(--honeycomb-glow); }
 .honeycomb-grid__cell.is-active .hexagon polygon { fill: var(--honeycomb-fill); stroke: rgba(255, 255, 255, 0.68); stroke-width: 0.55; }
-.honeycomb-grid__cell.is-neighbor { transform: scale(1.08); filter: brightness(1.12); }
+.honeycomb-grid__cell.is-neighbor .hexagon { transform: scale(1.055); filter: brightness(1.12); }
 .honeycomb-grid__cell.is-neighbor .hexagon polygon { fill: rgba(255, 255, 255, 0.13); stroke: rgba(255, 255, 255, 0.38); }
-.honeycomb-grid__cell.is-nearby { transform: scale(1.035); filter: brightness(1.05); }
+.honeycomb-grid__cell.is-nearby .hexagon { transform: scale(1.025); filter: brightness(1.05); }
 .honeycomb-grid__content-shell { overflow: visible; pointer-events: none; }
 .honeycomb-grid__content { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.25rem; color: var(--ink); text-align: center; }
 .honeycomb-grid__coordinate { position: absolute; top: 0.05rem; right: 0.25rem; color: rgba(255, 255, 255, 0.34); font-size: 0.1rem; font-weight: 900; }

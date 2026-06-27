@@ -72,7 +72,7 @@ export function HoneycombGrid({ cells, className = '' }: HoneycombGridProps) {
                 tabIndex={isNavigationCell ? 0 : -1}
                 onMouseEnter={() => setHoveredCellId(cell.id)}
                 onClick={() => openRoute(cell.route)}
-                onKeyDown={(event) => {
+                onKeyDown={(event: React.KeyboardEvent<SVGGElement>) => {
                   if (isNavigationCell && (event.key === 'Enter' || event.key === ' ')) {
                     event.preventDefault();
                     openRoute(cell.route);
