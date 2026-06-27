@@ -105,7 +105,7 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
   return (
     <div className={`honeycomb-grid ${transitionMode ? `honeycomb-grid--${transitionMode}` : ''} ${selectedCellId ? 'is-transitioning' : ''} ${className}`} onMouseLeave={() => setHoveredCellId(null)}>
       <HexGrid width="100%" height="100%" viewBox="-35 -28 118 88" className="honeycomb-grid__svg">
-        <Layout size={{ x: 12.2, y: 12.2 }} flat={false} spacing={1} origin={{ x: 0, y: 0 }}>
+        <Layout size={{ x: 12.2, y: 12.2 }} flat={true} spacing={1} origin={{ x: -120, y: -20 }}>
           {positionedCells.map((cell) => {
             const distance = hoveredCell ? cellDistance(cell, hoveredCell) : undefined;
             const reaction = distance === 0 ? 'active' : distance === 1 ? 'neighbor' : distance === 2 ? 'nearby' : 'idle';

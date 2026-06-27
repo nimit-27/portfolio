@@ -11,6 +11,10 @@ const honeycombCells: HoneycombCell[] = [
   { id: 'spark-02', row: 0, column: 4, icon: '✺', tone: 'ember' },
   { id: 'spark-1', row: 0, column: 5, icon: '◌', tone: 'blue' },
   { id: 'spark-03', row: 0, column: 6, icon: '✧', tone: 'gold' },
+  { id: 'spark-04', row: 0, column: 7, icon: '◈', tone: 'mint' },
+  { id: 'spark-05', row: 0, column: 8, icon: '◈', tone: 'mint' },
+  { id: 'spark-06', row: 0, column: 9, icon: '◈', tone: 'mint' },
+  { id: 'spark-07', row: 0, column: 10, icon: '◈', tone: 'mint' },
 
   // Row 1
   { id: 'about', row: 1, column: 0, title: 'About', subtitle: 'Motives and methods', route: '/about', icon: '◎', tone: 'mint' },
@@ -20,6 +24,8 @@ const honeycombCells: HoneycombCell[] = [
   { id: 'projects', row: 1, column: 4, title: 'Projects', subtitle: 'Built and shipped things', route: '/projects', icon: '▣', tone: 'blue' },
   { id: 'spark-12', row: 1, column: 5, icon: '✧', tone: 'mint' },
   { id: 'spark-2', row: 1, column: 6, icon: '✺', tone: 'gold' },
+  { id: 'spark-3', row: 1, column: 7, icon: '✺', tone: 'gold' },
+  { id: 'spark-4', row: 1, column: 8, icon: '✺', tone: 'gold' },
 
   // Row 2
   { id: 'spark-20', row: 2, column: 0, icon: '◇', tone: 'blue' },
@@ -29,6 +35,9 @@ const honeycombCells: HoneycombCell[] = [
   { id: 'spark-22', row: 2, column: 4, icon: '✦', tone: 'ember' },
   { id: 'contact', row: 2, column: 5, title: 'Contact', subtitle: 'Start a conversation', route: '/contact', icon: '✉', tone: 'ember' },
   { id: 'spark-23', row: 2, column: 6, icon: '◌', tone: 'violet' },
+  { id: 'resume', row: 2, column: 7, icon: '◌', tone: 'violet' },
+  { id: 'spark-23', row: 2, column: 8, icon: '◌', tone: 'violet' },
+  { id: 'spark-23', row: 2, column: 9, icon: '◌', tone: 'violet' },
 
   // Row 3
   { id: 'spark-30', row: 3, column: 0, imageSrc: '/self/nimz_standing_arms_crossed.png', imageAlt: 'Nimit standing with arms crossed', tone: 'mint' },
@@ -38,6 +47,9 @@ const honeycombCells: HoneycombCell[] = [
   { id: 'spark-4', row: 3, column: 4, imageSrc: '/self/nimz_black_kurta.png', imageAlt: 'Nimit portrait in a honeycomb cell', tone: 'violet' },
   { id: 'spark-33', row: 3, column: 5, icon: '✦', tone: 'ember' },
   { id: 'spark-34', row: 3, column: 6, icon: '◈', tone: 'mint' },
+  { id: 'spark-34', row: 3, column: 7, icon: '◈', tone: 'mint' },
+  { id: 'spark-34', row: 3, column: 8, icon: '◈', tone: 'mint' },
+  { id: 'spark-34', row: 3, column: 9, icon: '◈', tone: 'mint' },
 ];
 
 export function HoneycombHome() {
@@ -82,11 +94,12 @@ export function HoneycombHome() {
           <strong>{activeTransitionMode.label}</strong>
         </button>
         <div className="honeycomb-home__intro">
-          <p>Alternate homepage 02</p>
-          <h1 id="honeycomb-home-title">Choose a path through the hive.</h1>
-          <span>Hover the hexagons to ripple energy through neighboring cells.</span>
+
         </div>
-        <HoneycombGrid cells={honeycombCells} selectedCellId={selectedCell?.id ?? null} transitionMode={activeTransitionMode.id} onNavigate={handleNavigate} />
+        <div style={{ border: '1px solid red', position: 'relative', width: '100%', height: '100%' }}>
+
+          <HoneycombGrid cells={honeycombCells} selectedCellId={selectedCell?.id ?? null} transitionMode={activeTransitionMode.id} onNavigate={handleNavigate} />
+        </div>
         {activeTransitionMode.id === 'expand' ? (
           <HexagonExpandTransition activeCell={selectedCell} />
         ) : (
