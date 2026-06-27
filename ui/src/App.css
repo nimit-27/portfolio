@@ -173,7 +173,7 @@ a { color: inherit; }
 .honeycomb-grid__cell--ember { --honeycomb-glow: drop-shadow(0 0 12px rgba(255, 117, 82, 0.6)); --honeycomb-fill: rgba(255, 117, 82, 0.32); }
 .honeycomb-grid__cell.is-active .hexagon { transform: scale(1.14); filter: brightness(1.28) saturate(1.2) var(--honeycomb-glow); }
 .honeycomb-grid__cell.is-active .hexagon polygon { fill: var(--honeycomb-fill); stroke: rgba(255, 255, 255, 0.68); stroke-width: 0.55; }
-.honeycomb-grid__cell.is-neighbor .hexagon { transform: scale(1.055); filter: brightness(1.12); }
+.honeycomb-grid__cell.is-neighbor .hexagon { transform: scale(1.055) rotateY(-33deg); filter: brightness(1.12);   }
 .honeycomb-grid__cell.is-neighbor .hexagon polygon { fill: rgba(255, 255, 255, 0.13); stroke: rgba(255, 255, 255, 0.38); }
 .honeycomb-grid__cell.is-nearby .hexagon { transform: scale(1.025); filter: brightness(1.05); }
 .honeycomb-grid__content-shell { overflow: visible; pointer-events: none; }
