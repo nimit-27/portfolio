@@ -9,6 +9,8 @@ export type HoneycombCell = {
   subtitle?: string;
   route?: string;
   icon?: string;
+  imageSrc?: string;
+  imageAlt?: string;
   tone?: 'gold' | 'violet' | 'blue' | 'mint' | 'ember';
 };
 
@@ -92,8 +94,8 @@ export function HoneycombGrid({ cells, className = '' }: HoneycombGridProps) {
 
   return (
     <div className={`honeycomb-grid ${className}`} onMouseLeave={() => setHoveredCellId(null)}>
-      <HexGrid width="100%" height="100%" viewBox="-32 -22 104 76" className="honeycomb-grid__svg">
-        <Layout size={{ x: 9.8, y: 9.8 }} flat={false} spacing={1} origin={{ x: 0, y: 0 }}>
+      <HexGrid width="100%" height="100%" viewBox="-35 -28 118 88" className="honeycomb-grid__svg">
+        <Layout size={{ x: 12.2, y: 12.2 }} flat={false} spacing={1} origin={{ x: 0, y: 0 }}>
           {positionedCells.map((cell) => {
             const distance = hoveredCell ? cellDistance(cell, hoveredCell) : undefined;
             const reaction = distance === 0 ? 'active' : distance === 1 ? 'neighbor' : distance === 2 ? 'nearby' : 'idle';
@@ -110,7 +112,7 @@ export function HoneycombGrid({ cells, className = '' }: HoneycombGridProps) {
                 data-row={cell.row}
                 data-column={cell.column}
                 role={isNavigationCell ? 'link' : 'img'}
-                aria-label={isNavigationCell ? `${cell.title}: ${cell.subtitle}` : `Decorative honeycomb cell row ${cell.row} column ${cell.column}`}
+                aria-label={isNavigationCell ? `${cell.title}: ${cell.subtitle}` : cell.imageAlt ?? `Decorative honeycomb cell row ${cell.row} column ${cell.column}`}
                 tabIndex={isNavigationCell ? 0 : -1}
                 onMouseEnter={() => setHoveredCellId(cell.id)}
                 onClick={() => openRoute(cell.route)}
@@ -121,8 +123,11 @@ export function HoneycombGrid({ cells, className = '' }: HoneycombGridProps) {
                   }
                 }}
               >
-                <foreignObject x="-7.2" y="-6.8" width="14.4" height="13.6" className="honeycomb-grid__content-shell">
-                  <div className="honeycomb-grid__content">
+                <foreignObject x="-9.3" y="-8.9" width="18.6" height="17.8" className="honeycomb-grid__content-shell">
+                  <div className={`honeycomb-grid__content${cell.imageSrc ? ' honeycomb-grid__content--image' : ''}`}>
+                    {cell.imageSrc && (
+                      <img className="honeycomb-grid__self-image" src={cell.imageSrc} alt={cell.imageAlt ?? ''} />
+                    )}
                     <span className="honeycomb-grid__coordinate" aria-hidden="true">
                       {cell.row}.{cell.column}
                     </span>
