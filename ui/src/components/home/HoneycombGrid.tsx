@@ -95,8 +95,8 @@ export function HoneycombGrid({ cells, className = '' }: HoneycombGridProps) {
 
   return (
     <div className={`honeycomb-grid ${className}`} onMouseLeave={() => setHoveredCellId(null)}>
-      <HexGrid width="100%" height="100%" viewBox="-9 -34 174 132" className="honeycomb-grid__svg">
-        <Layout size={{ x: 6.4, y: 6.4 }} flat={false} spacing={1.02} origin={{ x: 0, y: 0 }}>
+      <HexGrid width="100%" height="100%" viewBox="-35 -28 118 88" className="honeycomb-grid__svg">
+        <Layout size={{ x: 12.2, y: 12.2 }} flat={false} spacing={1} origin={{ x: 0, y: 0 }}>
           {positionedCells.map((cell) => {
             const distance = hoveredCell ? cellDistance(cell, hoveredCell) : undefined;
             const reaction = distance === 0 ? 'active' : distance === 1 ? 'neighbor' : distance === 2 ? 'nearby' : 'idle';
@@ -124,7 +124,7 @@ export function HoneycombGrid({ cells, className = '' }: HoneycombGridProps) {
                   }
                 }}
               >
-                <foreignObject x="-4.9" y="-4.7" width="9.8" height="9.4" className="honeycomb-grid__content-shell">
+                <foreignObject x="-9.3" y="-8.9" width="18.6" height="17.8" className="honeycomb-grid__content-shell">
                   <div className={`honeycomb-grid__content${cell.imageSrc ? ' honeycomb-grid__content--image' : ''}`}>
                     {cell.imageSrc && (
                       <img className="honeycomb-grid__self-image" src={cell.imageSrc} alt={cell.imageAlt ?? ''} />
