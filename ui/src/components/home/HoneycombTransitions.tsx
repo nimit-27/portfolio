@@ -27,7 +27,6 @@ export function HexagonExpandTransition({ activeCell }: HoneycombTransitionProps
 
   return (
     <div className="honeycomb-transition honeycomb-transition--expand" aria-hidden={!activeCell}>
-      <div className={`honeycomb-transition__portal honeycomb-grid__cell--${activeCell.tone ?? 'violet'}`} />
       <TransitionPagePreview activeCell={activeCell} />
     </div>
   );
