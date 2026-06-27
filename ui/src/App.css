@@ -810,3 +810,194 @@ a {
     min-width: 7.6rem;
   }
 }
+.honeycomb-transition-toggle {
+  position: absolute;
+  left: clamp(1rem, 3vw, 2rem);
+  top: clamp(1rem, 3vw, 2rem);
+  z-index: 520;
+  display: grid;
+  gap: 0.1rem;
+  min-width: 9.2rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(17, 15, 29, 0.68);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.honeycomb-transition-toggle:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 204, 112, 0.78);
+  background: rgba(37, 29, 58, 0.86);
+}
+
+.honeycomb-transition-toggle span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.honeycomb-transition-toggle strong {
+  font-size: 0.95rem;
+}
+
+.honeycomb-grid.is-transitioning {
+  pointer-events: none;
+}
+
+.honeycomb-grid.is-transitioning .honeycomb-grid__cell .hexagon,
+.honeycomb-grid.is-transitioning .honeycomb-grid__cell {
+  transition-duration: 760ms;
+  transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.honeycomb-grid--expand.is-transitioning .honeycomb-grid__cell.is-dismissing .hexagon {
+  transform: scale(0.82) translateZ(-80px);
+  filter: blur(6px) brightness(0.55);
+  opacity: 0;
+}
+
+.honeycomb-grid--expand.is-transitioning .honeycomb-grid__cell.is-selected {
+  opacity: 1;
+}
+
+.honeycomb-grid--expand.is-transitioning .honeycomb-grid__cell.is-selected .hexagon {
+  transform: translateZ(220px) scale(46);
+  filter: brightness(1.45) saturate(1.3) var(--honeycomb-glow);
+  opacity: 0.92;
+}
+
+.honeycomb-grid--expand.is-transitioning .honeycomb-grid__cell.is-selected .hexagon polygon {
+  fill: var(--honeycomb-active-fill, #2d2448);
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 0.1;
+}
+
+.honeycomb-grid--vanish.is-transitioning .honeycomb-grid__cell.is-dismissing .hexagon {
+  animation: honeycomb-cell-vanish 720ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: calc(var(--vanish-index, 0) * 36ms);
+}
+
+.honeycomb-grid--vanish.is-transitioning .honeycomb-grid__cell.is-selected .hexagon {
+  transform: translateZ(90px) scale(1.22);
+  filter: brightness(1.44) saturate(1.25) var(--honeycomb-glow);
+}
+
+.honeycomb-transition {
+  position: absolute;
+  inset: 0;
+  z-index: 360;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.honeycomb-transition--expand {
+  background: radial-gradient(circle at 50% 50%, transparent 0 34%, rgba(17, 15, 29, 0.3) 58%, rgba(9, 9, 18, 0.66));
+  animation: honeycomb-transition-fade-in 220ms 520ms ease both;
+}
+
+.honeycomb-transition--vanish {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 204, 112, 0.16), rgba(17, 15, 29, 0.72) 54%, rgba(9, 9, 18, 0.88));
+  animation: honeycomb-transition-fade-in 760ms 320ms ease both;
+}
+
+.honeycomb-transition-page {
+  position: relative;
+  z-index: 2;
+  width: min(760px, calc(100% - 3rem));
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: clamp(1.4rem, 4vw, 2.6rem);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(27, 21, 45, 0.82));
+  backdrop-filter: blur(22px);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(22px) scale(0.96);
+  animation: honeycomb-page-reveal 680ms 760ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.honeycomb-transition--vanish .honeycomb-transition-page {
+  animation-delay: 520ms;
+}
+
+.honeycomb-transition-page p {
+  margin: 0 0 0.8rem;
+  color: var(--accent);
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.honeycomb-transition-page h2 {
+  margin: 0;
+  font-size: clamp(3rem, 11vw, 8rem);
+  line-height: 0.84;
+  letter-spacing: -0.09em;
+  text-transform: capitalize;
+}
+
+.honeycomb-transition-page span {
+  display: block;
+  margin-top: 1.4rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+@keyframes honeycomb-page-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes honeycomb-transition-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes honeycomb-cell-vanish {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0) brightness(1);
+  }
+
+  36% {
+    opacity: 1;
+    transform: scale(1.18) rotate(4deg);
+    filter: blur(0) brightness(1.28) saturate(1.15);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.05) rotate(18deg);
+    filter: blur(8px) brightness(0.42);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .honeycomb-grid--expand.is-transitioning .honeycomb-grid__cell.is-dismissing .hexagon,
+  .honeycomb-grid--expand.is-transitioning .honeycomb-grid__cell.is-selected .hexagon,
+  .honeycomb-grid--vanish.is-transitioning .honeycomb-grid__cell.is-dismissing .hexagon,
+  .honeycomb-grid--vanish.is-transitioning .honeycomb-grid__cell.is-selected .hexagon,
+  .honeycomb-transition,
+  .honeycomb-transition-page {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+    transition-duration: 1ms;
+  }
+}
