@@ -96,7 +96,7 @@ export function HoneycombHome() {
         <div className="honeycomb-home__intro">
 
         </div>
-        <div style={{ border: '1px solid red', position: 'relative', width: '100%', height: '100%' }}>
+        <div>
           <HoneycombGrid cells={honeycombCells} selectedCellId={selectedCell?.id ?? null} transitionMode={activeTransitionMode.id} onNavigate={handleNavigate} />
         </div>
         {activeTransitionMode.id === 'expand' ? (
