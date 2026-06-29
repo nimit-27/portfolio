@@ -105,7 +105,7 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
   return (
     <div className={`honeycomb-grid ${transitionMode ? `honeycomb-grid--${transitionMode}` : ''} ${selectedCellId ? 'is-transitioning' : ''} ${className}`} onMouseLeave={() => setHoveredCellId(null)}>
       <HexGrid width="100%" height="100%" viewBox="-35 -28 118 88" className="honeycomb-grid__svg">
-        <Layout size={{ x: 12.2, y: 12.2 }} flat={true} spacing={1} origin={{ x: -120, y: -20 }}>
+        <Layout size={{ x: 12.2, y: 12.2 }} flat={true} spacing={1} origin={{ x: -60, y: -20 }}>
           {positionedCells.map((cell) => {
             const distance = hoveredCell ? cellDistance(cell, hoveredCell) : undefined;
             const reaction = distance === 0 ? 'active' : distance === 1 ? 'neighbor' : distance === 2 ? 'nearby' : 'idle';
@@ -141,7 +141,7 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
                     {cell.imageSrc && (
                       <img className="honeycomb-grid__self-image" src={cell.imageSrc} alt={cell.imageAlt ?? ''} />
                     )}
-                    <span className="honeycomb-grid__coordinate" aria-hidden="true">
+                    <span className="honeycomb-grid__coordinate" aria-hidden="false">
                       {cell.row}.{cell.column}
                     </span>
                     {cell.icon && <span className="honeycomb-grid__icon" aria-hidden="true">{cell.icon}</span>}

@@ -760,10 +760,10 @@ a {
 }
 
 .honeycomb-grid__coordinate {
-  position: absolute;
+  /* position: absolute; */
   top: 0.05rem;
   right: 0.25rem;
-  color: rgba(255, 255, 255, 0.34);
+  color: rgba(255, 255, 255);
   font-size: 0.1rem;
   font-weight: 900;
 }

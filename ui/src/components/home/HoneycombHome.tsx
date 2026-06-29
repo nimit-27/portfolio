@@ -35,21 +35,21 @@ const honeycombCells: HoneycombCell[] = [
   { id: 'spark-22', row: 2, column: 4, icon: '✦', tone: 'ember' },
   { id: 'contact', row: 2, column: 5, title: 'Contact', subtitle: 'Start a conversation', route: '/contact', icon: '✉', tone: 'ember' },
   { id: 'spark-23', row: 2, column: 6, icon: '◌', tone: 'violet' },
-  { id: 'resume', row: 2, column: 7, icon: '◌', tone: 'violet' },
-  { id: 'spark-23', row: 2, column: 8, icon: '◌', tone: 'violet' },
-  { id: 'spark-23', row: 2, column: 9, icon: '◌', tone: 'violet' },
+  { id: 'resume-2', row: 2, column: 7, icon: '◌', tone: 'violet' },
+  { id: 'spark-24', row: 2, column: 8, icon: '◌', tone: 'violet' },
+  { id: 'spark-25', row: 2, column: 9, icon: '◌', tone: 'violet' },
 
   // Row 3
   { id: 'spark-30', row: 3, column: 0, imageSrc: '/self/nimz_standing_arms_crossed.png', imageAlt: 'Nimit standing with arms crossed', tone: 'mint' },
   { id: 'spark-31', row: 3, column: 1, icon: '✧', tone: 'blue' },
-  { id: 'spark-3', row: 3, column: 2, icon: '✹', tone: 'blue' },
+  { id: 'spark-39', row: 3, column: 2, icon: '✹', tone: 'blue' },
   { id: 'spark-32', row: 3, column: 3, icon: '◇', tone: 'gold' },
-  { id: 'spark-4', row: 3, column: 4, imageSrc: '/self/nimz_black_kurta.png', imageAlt: 'Nimit portrait in a honeycomb cell', tone: 'violet' },
+  { id: 'spark-38', row: 3, column: 4, imageAlt: 'Nimit portrait in a honeycomb cell', tone: 'violet' },
   { id: 'spark-33', row: 3, column: 5, icon: '✦', tone: 'ember' },
   { id: 'spark-34', row: 3, column: 6, icon: '◈', tone: 'mint' },
-  { id: 'spark-34', row: 3, column: 7, icon: '◈', tone: 'mint' },
-  { id: 'spark-34', row: 3, column: 8, icon: '◈', tone: 'mint' },
-  { id: 'spark-34', row: 3, column: 9, icon: '◈', tone: 'mint' },
+  { id: 'spark-35', row: 3, column: 7, icon: '◈', tone: 'mint' },
+  { id: 'spark-36', row: 3, column: 8, icon: '◈', tone: 'mint' },
+  { id: 'spark-37', row: 3, column: 9, icon: '◈', tone: 'mint' },
 ];
 
 export function HoneycombHome() {
@@ -97,7 +97,6 @@ export function HoneycombHome() {
 
         </div>
         <div style={{ border: '1px solid red', position: 'relative', width: '100%', height: '100%' }}>
-
           <HoneycombGrid cells={honeycombCells} selectedCellId={selectedCell?.id ?? null} transitionMode={activeTransitionMode.id} onNavigate={handleNavigate} />
         </div>
         {activeTransitionMode.id === 'expand' ? (
