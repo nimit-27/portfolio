@@ -34,13 +34,7 @@ function HoneycombPage({ page }: { page: PortfolioPage }) {
   return (
     <main className="placeholder-page placeholder-page--honeycomb">
       <Link to="/" className="timeline-page__home-link">← Orbit home</Link>
-      <div className="placeholder-page__copy">
-        <h1>{page.title}</h1>
-        <p>{page.description}</p>
-      </div>
-      <div className="placeholder-page__honeycomb-anchor" aria-label={`${page.title} honeycomb grid`}>
-        <HoneycombGrid cells={cells} className="honeycomb-grid--page-anchor" />
-      </div>
+      <HoneycombGrid cells={cells} className="honeycomb-grid--page-anchor" />
     </main>
   );
 }
