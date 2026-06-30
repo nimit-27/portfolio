@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export type FloatingCardPosition = {
   top?: string;
@@ -30,9 +31,9 @@ export function FloatingNavCard({ card, isClickable = true }: FloatingNavCardPro
   };
 
   return (
-    <a
+    <Link
       className={`floating-nav-card${isClickable ? '' : ' floating-nav-card--disabled'}`}
-      href={card.route}
+      to={card.route}
       aria-disabled={!isClickable}
       tabIndex={isClickable ? undefined : -1}
       onClick={handleClick}
@@ -42,6 +43,6 @@ export function FloatingNavCard({ card, isClickable = true }: FloatingNavCardPro
         <strong>{card.title}</strong>
         <small>{card.subtitle}</small>
       </span>
-    </a>
+    </Link>
   );
 }
