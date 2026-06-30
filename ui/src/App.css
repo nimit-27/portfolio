@@ -978,17 +978,17 @@ a {
 @keyframes honeycomb-selected-cell-to-corner {
   0% {
     opacity: 1;
-    transform: translateZ(90px) scale(2.22);
+    transform: translateZ(90px) scale(1.0);
   }
 
   44% {
     opacity: 1;
-    transform: translateZ(130px) scale(1.72);
+    transform: translateZ(130px) scale(1.0);
   }
 
   100% {
     opacity: 1;
-    transform: translate(var(--vanish-to-corner-x, -38vw), var(--vanish-to-corner-y, -34vh)) translateZ(150px) scale(1.08);
+    transform: translate(var(--vanish-to-corner-x, -38vw), var(--vanish-to-corner-y, -34vh)) translateZ(150px) scale(1.0);
   }
 }
 
