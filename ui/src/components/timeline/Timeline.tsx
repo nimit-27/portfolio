@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { TimelineAxis } from './TimelineAxis';
 import { TimelineItem } from './TimelineItem';
 import { getTimelineHeight, getYearMarkers, positionEvents, TimelineEvent } from './timelineUtils';
@@ -43,7 +44,7 @@ export function Timeline({
   return (
     <section className="timeline-page" aria-labelledby="timeline-title">
       <div className="timeline-page__intro">
-        <a href="/" className="timeline-page__home-link">← Orbit home</a>
+        <Link to="/" className="timeline-page__home-link">← Orbit home</Link>
         <h1 id="timeline-title">Timeline</h1>
         <p>Start at the latest point, then scroll upward to move into earlier chapters.</p>
       </div>

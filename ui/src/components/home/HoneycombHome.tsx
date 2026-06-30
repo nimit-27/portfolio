@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HoneycombCell, HoneycombGrid } from './HoneycombGrid';
 import { HexagonExpandTransition, HoneycombTransitionMode, HoneycombVanishTransition } from './HoneycombTransitions';
 
@@ -53,6 +54,7 @@ export const honeycombCells: HoneycombCell[] = [
 ];
 
 export function HoneycombHome() {
+  const navigate = useNavigate();
   const transitionModes = useMemo<{ id: HoneycombTransitionMode; label: string }[]>(() => [
     { id: 'expand', label: 'Zoom hex' },
     { id: 'vanish', label: 'Vanish cells' },
@@ -68,9 +70,6 @@ export function HoneycombHome() {
 
   const handleNavigate = (cell: HoneycombCell) => {
     setSelectedCell(cell);
-    if (cell.route) {
-      window.history.pushState({ honeycombRoute: cell.route }, '', cell.route);
-    }
   };
 
   useEffect(() => {
@@ -83,7 +82,7 @@ export function HoneycombHome() {
     }, 2400);
     const routeTimer = selectedCell.route
       ? window.setTimeout(() => {
-          window.dispatchEvent(new PopStateEvent('popstate', { state: { honeycombRoute: selectedCell.route } }));
+          navigate(selectedCell.route ?? '/');
         }, 1200)
       : undefined;
 
@@ -93,7 +92,7 @@ export function HoneycombHome() {
         window.clearTimeout(routeTimer);
       }
     };
-  }, [selectedCell]);
+  }, [navigate, selectedCell]);
 
   return (
     <main className="honeycomb-home">

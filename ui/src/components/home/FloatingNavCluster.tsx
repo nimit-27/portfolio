@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FloatingNavCard, FloatingNavCardData } from './FloatingNavCard';
 
 type FloatingNavClusterProps = {
@@ -50,6 +51,7 @@ function getCenteredCardIndex(cards: FloatingNavCardData[], orbitRotation: numbe
 }
 
 export function FloatingNavCluster({ cards, className = '' }: FloatingNavClusterProps) {
+  const navigate = useNavigate();
   const [orbitRotation, setOrbitRotation] = useState(0);
   const hoverSliderClientYRef = useRef<number | null>(null);
   const totalCards = Math.max(cards.length, 1);
@@ -81,7 +83,7 @@ export function FloatingNavCluster({ cards, className = '' }: FloatingNavCluster
     const centeredCard = cards[centeredCardIndex];
 
     if (centeredCard) {
-      window.location.href = centeredCard.route;
+      navigate(centeredCard.route);
     }
   };
 
