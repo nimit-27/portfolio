@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { HoneycombCell, HoneycombGrid } from './HoneycombGrid';
 import { HexagonExpandTransition, HoneycombTransitionMode, HoneycombVanishTransition } from './HoneycombTransitions';
 
-const honeycombCells: HoneycombCell[] = [
+export const honeycombCells: HoneycombCell[] = [
   // Row 0
   { id: 'spark-00', row: 0, column: 0, icon: '✦', tone: 'blue' },
   { id: 'spark-0', row: 0, column: 1, imageSrc: '/self/nimz_black_kurta.png', imageAlt: 'Nimit in a black kurta', tone: 'violet' },
@@ -80,10 +80,19 @@ export function HoneycombHome() {
 
     const resetTimer = window.setTimeout(() => {
       setSelectedCell(null);
-      window.history.pushState({ honeycombRoute: '/' }, '', '/');
     }, 2400);
+    const routeTimer = selectedCell.route
+      ? window.setTimeout(() => {
+          window.dispatchEvent(new PopStateEvent('popstate', { state: { honeycombRoute: selectedCell.route } }));
+        }, 1200)
+      : undefined;
 
-    return () => window.clearTimeout(resetTimer);
+    return () => {
+      window.clearTimeout(resetTimer);
+      if (routeTimer) {
+        window.clearTimeout(routeTimer);
+      }
+    };
   }, [selectedCell]);
 
   return (

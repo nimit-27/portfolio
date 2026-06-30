@@ -1,22 +1,44 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { HomeHero } from './components/home/HomeHero';
-import { HoneycombHome } from './components/home/HoneycombHome';
+import { honeycombCells, HoneycombHome } from './components/home/HoneycombHome';
+import { HoneycombGrid } from './components/home/HoneycombGrid';
 import { Timeline } from './components/timeline/Timeline';
 import { timelineEvents } from './data/timelineEvents';
 
-function PlaceholderPage({ title }: { title: string }) {
+function PlaceholderPage({ title, route }: { title: string; route: string }) {
+  const selectedCell = honeycombCells.find((cell) => cell.route === route) ?? null;
+
   return (
-    <main className="placeholder-page">
+    <main className="placeholder-page placeholder-page--honeycomb">
       <a href="/" className="timeline-page__home-link">← Orbit home</a>
-      <h1>{title}</h1>
-      <p>This section is ready for its own creative page.</p>
+      <div className="placeholder-page__copy">
+        <h1>{title}</h1>
+        <p>This section is ready for its own creative page.</p>
+      </div>
+      {selectedCell && (
+        <div className="placeholder-page__honeycomb-anchor" aria-label={`${selectedCell.title} honeycomb position`}>
+          <HoneycombGrid
+            cells={[selectedCell]}
+            className="honeycomb-grid--page-anchor"
+            selectedCellId={selectedCell.id}
+            transitionMode="vanish"
+          />
+        </div>
+      )}
     </main>
   );
 }
 
 function App() {
-  const path = window.location.pathname;
+  const [path, setPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handleRouteChange = () => setPath(window.location.pathname);
+
+    window.addEventListener('popstate', handleRouteChange);
+    return () => window.removeEventListener('popstate', handleRouteChange);
+  }, []);
   const homepageDesigns = useMemo(() => [
     { id: 'orbit', label: 'Orbit', component: <HomeHero /> },
     { id: 'honeycomb', label: 'Honeycomb', component: <HoneycombHome /> },
@@ -33,7 +55,7 @@ function App() {
 
   const sectionTitle = path.replace('/', '').replace('-', ' ');
   if (sectionTitle) {
-    return <PlaceholderPage title={sectionTitle} />;
+    return <PlaceholderPage title={sectionTitle} route={path} />;
   }
 
   const activeDesign = homepageDesigns[homepageDesignIndex];
