@@ -123,7 +123,13 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
                 key={cell.id}
                 data-row={cell.row}
                 data-column={cell.column}
-                style={{ '--vanish-index': (cell.row * 7) + cell.column } as React.CSSProperties}
+                style={
+                  {
+                    '--vanish-index': (cell.row * 7) + cell.column,
+                    '--vanish-to-corner-x': `calc(-12vw - ${cell.column * 6.5}vw)`,
+                    '--vanish-to-corner-y': `calc(-24vh - ${cell.row * 8}vh)`,
+                  } as React.CSSProperties
+                }
                 role={isNavigationCell ? 'link' : 'img'}
                 aria-label={isNavigationCell ? `${cell.title}: ${cell.subtitle}` : cell.imageAlt ?? `Decorative honeycomb cell row ${cell.row} column ${cell.column}`}
                 tabIndex={isNavigationCell ? 0 : -1}

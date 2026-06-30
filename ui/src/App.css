@@ -886,8 +886,14 @@ a {
 }
 
 .honeycomb-grid--vanish.is-transitioning .honeycomb-grid__cell.is-selected .hexagon {
-  transform: translateZ(90px) scale(2.22);
+  animation: honeycomb-selected-cell-to-corner 920ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
   filter: brightness(1.44) saturate(1.25) var(--honeycomb-glow);
+}
+
+.honeycomb-grid--vanish.is-transitioning .honeycomb-grid__cell.is-selected .hexagon polygon {
+  fill: var(--honeycomb-active-fill, #2d2448);
+  stroke: rgba(255, 255, 255, 0.68);
+  stroke-width: 0.48;
 }
 
 .honeycomb-transition {
@@ -969,6 +975,23 @@ a {
   }
 }
 
+@keyframes honeycomb-selected-cell-to-corner {
+  0% {
+    opacity: 1;
+    transform: translateZ(90px) scale(1.0);
+  }
+
+  44% {
+    opacity: 1;
+    transform: translateZ(130px) scale(1.0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(var(--vanish-to-corner-x, -38vw), var(--vanish-to-corner-y, -34vh)) translateZ(150px) scale(1.0);
+  }
+}
+
 @keyframes honeycomb-cell-vanish {
   0% {
     opacity: 1;
@@ -1033,10 +1056,6 @@ a {
   transition-duration: 0ms;
 }
 
-.honeycomb-grid--vanish.is-transitioning .honeycomb-grid__cell.is-selected .hexagon {
-  transform: translateX(34px) translateZ(90px) scale(2.22);
-  filter: brightness(1.44) saturate(1.25) var(--honeycomb-glow);
-}
 
 @media (max-width: 920px) {
   .honeycomb-grid--page-anchor {
