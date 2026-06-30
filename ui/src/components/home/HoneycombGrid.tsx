@@ -28,6 +28,10 @@ type PositionedHoneycombCell = HoneycombCell & {
   s: number;
 };
 
+const HEX_SIZE = 12.2;
+const FLAT_HEX_WIDTH_STEP = HEX_SIZE * 1.5;
+const FLAT_HEX_HEIGHT_STEP = HEX_SIZE * Math.sqrt(3);
+
 type NeighborDirection =
   | 'right'
   | 'left'
@@ -47,6 +51,13 @@ function offsetToCube(cell: HoneycombCell): PositionedHoneycombCell {
 
 function cellDistance(a: PositionedHoneycombCell, b: PositionedHoneycombCell) {
   return Math.max(Math.abs(a.q - b.q), Math.abs(a.r - b.r), Math.abs(a.s - b.s));
+}
+
+function getHexCenter(cell: PositionedHoneycombCell) {
+  return {
+    x: cell.q * FLAT_HEX_WIDTH_STEP,
+    y: (cell.r + (cell.q / 2)) * FLAT_HEX_HEIGHT_STEP,
+  };
 }
 
 function getNeighborDirection(cell: PositionedHoneycombCell, hovered: PositionedHoneycombCell): NeighborDirection {
@@ -88,6 +99,21 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
     () => positionedCells.find((cell) => cell.id === hoveredCellId) ?? null,
     [positionedCells, hoveredCellId]
   );
+  const vanishTargetCenter = useMemo(() => {
+    const firstCell = positionedCells.reduce<PositionedHoneycombCell | null>((currentFirstCell, cell) => {
+      if (!currentFirstCell) {
+        return cell;
+      }
+
+      if (cell.row < currentFirstCell.row || (cell.row === currentFirstCell.row && cell.column < currentFirstCell.column)) {
+        return cell;
+      }
+
+      return currentFirstCell;
+    }, null);
+
+    return firstCell ? getHexCenter(firstCell) : { x: 0, y: 0 };
+  }, [positionedCells]);
 
   const openRoute = (cell: HoneycombCell) => {
     if (!cell.route) {
@@ -113,6 +139,7 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
             const direction = distance === 1 && hoveredCell ? getNeighborDirection(cell, hoveredCell) : 'none';
             const isSelected = selectedCellId === cell.id;
             const transitionClass = selectedCellId ? (isSelected ? 'is-selected' : 'is-dismissing') : '';
+            const cellCenter = getHexCenter(cell);
 
             return (
               <Hexagon
@@ -126,8 +153,8 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
                 style={
                   {
                     '--vanish-index': (cell.row * 7) + cell.column,
-                    '--vanish-to-corner-x': `calc(-12vw - ${cell.column * 6.5}vw)`,
-                    '--vanish-to-corner-y': `calc(-24vh - ${cell.row * 8}vh)`,
+                    '--vanish-to-corner-x': `${vanishTargetCenter.x - cellCenter.x}px`,
+                    '--vanish-to-corner-y': `${vanishTargetCenter.y - cellCenter.y}px`,
                   } as React.CSSProperties
                 }
                 role={isNavigationCell ? 'link' : 'img'}
