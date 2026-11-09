@@ -76,22 +76,6 @@ export function HoneycombHome() {
     if (!selectedCell) {
       return undefined;
     }
-
-    const resetTimer = window.setTimeout(() => {
-      setSelectedCell(null);
-    }, 2400);
-    const routeTimer = selectedCell.route
-      ? window.setTimeout(() => {
-          navigate(selectedCell.route ?? '/');
-        }, 1200)
-      : undefined;
-
-    return () => {
-      window.clearTimeout(resetTimer);
-      if (routeTimer) {
-        window.clearTimeout(routeTimer);
-      }
-    };
   }, [navigate, selectedCell]);
 
   return (
