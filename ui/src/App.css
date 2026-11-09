@@ -988,7 +988,7 @@ a {
 
   100% {
     opacity: 1;
-    transform: translate(var(--vanish-to-corner-x, -38vw), var(--vanish-to-corner-y, -34vh)) translateZ(150px) scale(1.0);
+    transform: translate(var(--vanish-to-corner-x, -3vw), var(--vanish-to-corner-y, -34vh)) translateZ(150px) scale(1.0);
   }
 }
 
