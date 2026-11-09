@@ -69,14 +69,22 @@ export function HoneycombHome() {
   };
 
   const handleNavigate = (cell: HoneycombCell) => {
+    if (selectedCell || !cell.route) {
+      return;
+    }
     setSelectedCell(cell);
   };
 
   useEffect(() => {
-    if (!selectedCell) {
+    if (!selectedCell?.route) {
       return undefined;
     }
-  }, [navigate, selectedCell]);
+
+    const route = selectedCell.route;
+    // Allow the page reveal (expand) or staggered cell dismissal (vanish) to finish.
+    const timeout = window.setTimeout(() => navigate(route), activeTransitionMode.id === 'expand' ? 1500 : 2000);
+    return () => window.clearTimeout(timeout);
+  }, [activeTransitionMode.id, navigate, selectedCell]);
 
   return (
     <main className="honeycomb-home">

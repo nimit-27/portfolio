@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Hexagon, HexGrid, Layout } from 'react-hexgrid';
+import { useNavigate } from 'react-router-dom';
 
 export type HoneycombCell = {
   id: string;
@@ -93,6 +94,7 @@ function getNeighborDirection(cell: PositionedHoneycombCell, hovered: Positioned
 }
 
 export function HoneycombGrid({ cells, className = '', selectedCellId = null, transitionMode, onNavigate }: HoneycombGridProps) {
+  const navigate = useNavigate();
   const [hoveredCellId, setHoveredCellId] = useState<string | null>(null);
   const positionedCells = useMemo(() => cells.map(offsetToCube), [cells]);
   const hoveredCell = useMemo(
@@ -125,7 +127,7 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
       return;
     }
 
-    window.location.href = cell.route;
+    navigate(cell.route);
   };
 
   return (
