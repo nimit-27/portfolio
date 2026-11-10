@@ -637,7 +637,7 @@ a {
 .honeycomb-grid__cell .hexagon polygon {
   stroke: rgba(255, 255, 255, 0.2);
   stroke-width: 0.36;
-  fill: rgba(28, 22, 48, 0.9);
+  fill: rgba(28, 22, 48, 0.4);
   transition: fill 280ms ease, stroke 280ms ease, stroke-width 280ms ease;
 }
 
