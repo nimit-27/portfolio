@@ -44,7 +44,7 @@ export function Timeline({
   return (
     <section className="timeline-page" aria-labelledby="timeline-title">
       <div className="timeline-page__intro">
-        <Link to="/" className="timeline-page__home-link">← Orbit home</Link>
+        <Link to="/" className="timeline-page__home-link">← Home</Link>
         <h1 id="timeline-title">Timeline</h1>
         <p>Start at the latest point, then scroll upward to move into earlier chapters.</p>
       </div>

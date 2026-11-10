@@ -32,9 +32,12 @@ function HoneycombPage({ page }: { page: PortfolioPage }) {
   const cells = useMemo(() => buildPageHoneycombCells(page), [page]);
 
   return (
-    <main className="placeholder-page placeholder-page--honeycomb">
-      <Link to="/" className="timeline-page__home-link">← Orbit home</Link>
-      <HoneycombGrid cells={cells} className="honeycomb-grid--page-anchor" />
+    <main className="honeycomb-home">
+      <section className="honeycomb-home__stage" aria-labelledby="honeycomb-home-title">
+        <div>
+          <HoneycombGrid cells={cells} />
+        </div>
+      </section>
     </main>
   );
 }
@@ -44,7 +47,7 @@ function HomePage() {
     { id: 'orbit', label: 'Orbit', component: <HomeHero /> },
     { id: 'honeycomb', label: 'Honeycomb', component: <HoneycombHome /> },
   ], []);
-  const [homepageDesignIndex, setHomepageDesignIndex] = useState(0);
+  const [homepageDesignIndex, setHomepageDesignIndex] = useState(1);
 
   const toggleHomepageDesign = () => {
     setHomepageDesignIndex((currentIndex) => (currentIndex + 1) % homepageDesigns.length);

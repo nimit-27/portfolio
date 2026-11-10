@@ -563,14 +563,10 @@ a {
 .honeycomb-home__stage {
   position: relative;
   min-height: calc(100vh - clamp(2rem, 6vw, 5rem));
-  border: 1px solid var(--line);
-  border-radius: clamp(1.5rem, 4vw, 3rem);
   display: grid;
   place-items: center;
   padding: clamp(1.5rem, 4vw, 4rem);
   overflow: hidden;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 204, 112, 0.18), transparent 28%), linear-gradient(150deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
 }
 
 .honeycomb-home__intro {
@@ -911,7 +907,7 @@ a {
 }
 
 .honeycomb-transition--vanish {
-  background: radial-gradient(circle at 50% 50%, rgba(255, 204, 112, 0.16), rgba(17, 15, 29, 0.72) 54%, rgba(9, 9, 18, 0.88));
+  /* background: radial-gradient(circle at 50% 50%, rgba(255, 204, 112, 0.16), rgba(17, 15, 29, 0.72) 54%, rgba(9, 9, 18, 0.88)); */
   animation: honeycomb-transition-fade-in 760ms 320ms ease both;
 }
 

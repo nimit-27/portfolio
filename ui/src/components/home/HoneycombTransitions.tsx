@@ -39,7 +39,7 @@ export function HoneycombVanishTransition({ activeCell }: HoneycombTransitionPro
 
   return (
     <div className="honeycomb-transition honeycomb-transition--vanish" aria-hidden={!activeCell}>
-      <TransitionPagePreview activeCell={activeCell} />
+      {/* <TransitionPagePreview activeCell={activeCell} /> */}
     </div>
   );
 }

@@ -127,7 +127,7 @@ export function HoneycombGrid({ cells, className = '', selectedCellId = null, tr
       return;
     }
 
-    navigate(cell.route);
+    // navigate(cell.route);
   };
 
   return (

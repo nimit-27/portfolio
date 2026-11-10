@@ -59,7 +59,7 @@ export function HoneycombHome() {
     { id: 'expand', label: 'Zoom hex' },
     { id: 'vanish', label: 'Vanish cells' },
   ], []);
-  const [transitionModeIndex, setTransitionModeIndex] = useState(0);
+  const [transitionModeIndex, setTransitionModeIndex] = useState(1);
   const [selectedCell, setSelectedCell] = useState<HoneycombCell | null>(null);
   const activeTransitionMode = transitionModes[transitionModeIndex];
 
